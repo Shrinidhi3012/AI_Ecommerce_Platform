@@ -4,3 +4,4 @@ sqlalchemy
 asyncpg
 psycopg2-binary
 python-dotenv
+prometheus_fastapi_instrumentator

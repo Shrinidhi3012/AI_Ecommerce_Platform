@@ -3,11 +3,15 @@ kind: Service
 metadata:
   name: product-service
   namespace: ecommerce
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8000"
+    prometheus.io/path: "/metrics"
 spec:
   selector:
     app: product-service
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: 80
       targetPort: 8000
-  type: NodePort
