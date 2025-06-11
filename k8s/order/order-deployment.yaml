@@ -21,3 +21,10 @@ spec:
           env:
             - name: DATABASE_URL
               value: postgresql://user:password@postgres.ecommerce.svc.cluster.local:5432/orderdb
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
