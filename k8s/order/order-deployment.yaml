@@ -21,6 +21,8 @@ spec:
           env:
             - name: DATABASE_URL
               value: postgresql://user:password@postgres.ecommerce.svc.cluster.local:5432/orderdb
+            - name: PRODUCT_SERVICE_URL
+              value: http://product-service.ecommerce.svc.cluster.local:8000
           resources:
             requests:
               cpu: "100m"

@@ -1,12 +1,38 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from .. import models, schemas
 from ..database import get_db
+import requests
+import os
 
 router = APIRouter()
 
+# Use internal Kubernetes DNS for service communication
+PRODUCT_SERVICE_URL = os.getenv("PRODUCT_SERVICE_URL", "http://product-service.ecommerce.svc.cluster.local:8000")
+
 @router.post("/orders/", response_model=schemas.Order)
 def create_order(order: schemas.OrderCreate, db: Session = Depends(get_db)):
+    # Step 1: Check product availability
+    try:
+        res = requests.get(f"{PRODUCT_SERVICE_URL}/products/name/{order.product_name}")
+        res.raise_for_status()
+        product = res.json()
+        if product.get("quantity", 0) < order.quantity:
+            raise HTTPException(status_code=400, detail="Insufficient stock")
+    except requests.exceptions.RequestException as e:
+        raise HTTPException(status_code=500, detail=f"Product check failed: {str(e)}")
+
+    # Step 2: Request stock decrement
+    try:
+        update_res = requests.patch(
+            f"{PRODUCT_SERVICE_URL}/products/decrement/{product['id']}",
+            json={"quantity": order.quantity}
+        )
+        update_res.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        raise HTTPException(status_code=500, detail=f"Stock update failed: {str(e)}")
+
+    # Step 3: Record order in DB
     db_order = models.Order(**order.dict())
     db.add(db_order)
     db.commit()
