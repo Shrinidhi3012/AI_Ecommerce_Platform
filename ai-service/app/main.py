@@ -17,3 +17,4 @@ app.add_middleware(
 )
 
 app.include_router(ai_routes.router, prefix="/ai")
+
