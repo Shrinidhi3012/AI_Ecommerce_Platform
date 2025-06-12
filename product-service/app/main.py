@@ -4,10 +4,18 @@ from . import models, schemas
 from .database import SessionLocal, engine, Base,get_db
 from prometheus_fastapi_instrumentator import Instrumentator
 from .routers import routes
+from fastapi.middleware.cors import CORSMiddleware
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 Instrumentator().instrument(app).expose(app)
 
 app.include_router(routes.router)
