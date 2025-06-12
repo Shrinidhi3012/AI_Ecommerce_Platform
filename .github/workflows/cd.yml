@@ -15,8 +15,9 @@ jobs:
       - name: Set up Kubeconfig
         run: |
           mkdir -p ~/.kube
-          echo "${{ secrets.KUBE_CONFIG_DATA }}" > ~/.kube/config
-          chmod 600 ~/.kube/config
+          echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 --decode > ~/.kube/config
+        env:
+          KUBECONFIG: ~/.kube/config    
 
       - name: Restart product-service
         run: kubectl rollout restart deployment/product-service -n ecommerce
