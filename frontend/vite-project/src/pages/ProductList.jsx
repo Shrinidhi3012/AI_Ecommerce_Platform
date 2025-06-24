@@ -28,7 +28,7 @@ export default function Products() {
       if (!res.ok) {
         setError(data.detail || "Failed to place order");
       } else {
-        fetchProducts(); // Refresh stock after successful order
+        fetchProducts();
       }
     } catch (err) {
       setError("Server error");

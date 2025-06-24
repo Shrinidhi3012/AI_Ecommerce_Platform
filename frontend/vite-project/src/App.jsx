@@ -3,7 +3,8 @@ import Home from './pages/Home'
 import ProductList from './pages/ProductList'
 import Orders from './pages/Orders'
 import Checkout from './pages/Checkout'
-import AISummary from "./components/AISummary";
+import AISummary from './components/AISummary'
+import AIRecommenderPage from './pages/AIRecommenderpage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Link to="/orders">Orders</Link>
         <Link to="/checkout">Checkout</Link>
         <Link to="/ai-summary">AI Summary</Link> 
+        <Link to="/ai-recommender">AI Recommender</Link>
       </nav>
 
       <Routes>
@@ -22,6 +24,7 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/ai-summary" element={<AISummary />} />
+        <Route path="/ai-recommender" element={<AIRecommenderPage />} />
       </Routes>
     </div>
   );

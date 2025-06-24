@@ -18,5 +18,4 @@ app.add_middleware(
 
 Instrumentator().instrument(app).expose(app)
 
-# Include all product-related routes from routes.py
 app.include_router(routes.router)
