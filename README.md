@@ -48,15 +48,3 @@ A full-stack AI-powered e-commerce platform built with FastAPI microservices, Po
 
 ### 🔧 System Architecture
 ![Architecture Diagram](./assets/architecture-diagram.png)
-
-### 📊 Monitoring with Grafana
-![Grafana Dashboard](./assets/grafana-dashboard.png)
-
-### 🛒 Product Display Page
-![Product Page](./assets/product-page.png)
-
-### 🤖 AI Product Summary
-![AI Summary UI](./assets/ai-summary-ui.png)
-
-### 🎯 AI Recommender System
-![AI Recommender UI](./assets/ai-recommender-ui.png)
